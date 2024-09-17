@@ -6,6 +6,7 @@ import re
 apelidos = {}
 canais = {}
 
+
 def validar_nome(nome):
     return re.match(br'^[a-zA-Z][a-zA-Z0-9_-]*$', nome) is not None
 
@@ -60,7 +61,8 @@ def dados_recebidos(conexao, dados):
             elif novo_apelido.lower() in apelidos and apelidos[novo_apelido.lower()] != conexao:
                 if hasattr(conexao, 'apelido'):
                     conexao.enviar(
-                        b':server 433 ' + conexao.apelido + b' ' + args[0].strip() + b' :Nickname is already in use\r\n')
+                        b':server 433 ' + conexao.apelido + b' ' + args[
+                            0].strip() + b' :Nickname is already in use\r\n')
                 else:
                     conexao.enviar(b':server 433 * ' + args[0].strip() + b' :Nickname is already in use\r\n')
             else:
@@ -82,7 +84,8 @@ def dados_recebidos(conexao, dados):
 
             if destinatario in apelidos:  # Mensagem para um usuário
                 conexao_destino = apelidos[destinatario]
-                conexao_destino.enviar(b':' + conexao.apelido + b' PRIVMSG ' + destinatario + b' :' + mensagem + b'\r\n')
+                conexao_destino.enviar(
+                    b':' + conexao.apelido + b' PRIVMSG ' + destinatario + b' :' + mensagem + b'\r\n')
 
             elif destinatario in canais:  # Mensagem para um canal
                 for membro in canais[destinatario].values():
